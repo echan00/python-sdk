@@ -442,6 +442,8 @@ class DBLClient:
                     event_name = 'dbl_vote'
                 elif data.get('type') == 'test':
                     event_name = 'dbl_test'
+                elif isinstance(data.get('id'), str):
+                    event_name = 'dbl_vote'                    
                 else:
                     return
                 self.bot.dispatch(event_name, data)
