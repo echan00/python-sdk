@@ -450,8 +450,7 @@ class DBLClient:
                 return web.Response(status=401)
 
         app = web.Application(loop=self.loop)
-        app.router.add_post(self.webhook_path, vote_handler)
-        app.router.add_get(self.webhook_path, vote_handler)
+        app.router.add_route('*', self.webhook_path, vote_handler)
         runner = web.AppRunner(app)
         await runner.setup()
         self._webserver = web.TCPSite(runner, '0.0.0.0', self.webhook_port)
