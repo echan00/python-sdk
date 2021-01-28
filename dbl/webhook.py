@@ -88,7 +88,7 @@ class WebhookManager:
     async def run(self, port: int):
         for webhook in self._webhooks:
             self.__app.router.add_post(self._webhooks[webhook]["path"], self._webhooks[webhook]["func"])
-            self.__app.router.add_route('OPTIONS', self._webhooks[webhook]["path"], self._webhooks[webhook]["func"])
+            #self.__app.router.add_route('OPTIONS', self._webhooks[webhook]["path"], self._webhooks[webhook]["func"])
         runner = web.AppRunner(self.__app)
         await runner.setup()
         self._webserver = web.TCPSite(runner, '0.0.0.0', port)
