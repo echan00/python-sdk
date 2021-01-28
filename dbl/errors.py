@@ -25,31 +25,33 @@ DEALINGS IN THE SOFTWARE.
 """
 
 
-class TopGGException(Exception):
-    """Base exception class for topggpy.
+class DBLException(Exception):
+    """Base exception class for dblpy
 
     Ideally speaking, this could be caught to handle any exceptions thrown from this library.
     """
     pass
 
 
-class ClientException(TopGGException):
-    """Exception that's thrown when an operation in the :class:`DBLClient` fails.
+class ClientException(DBLException):
+    """Exception that's thrown when an operation in the :class:`Client` fails.
 
     These are usually for exceptions that happened due to user input.
     """
     pass
 
 
-class HTTPException(TopGGException):
+class HTTPException(DBLException):
     """Exception that's thrown when an HTTP request operation fails.
 
     .. _aiohttp.ClientResponse: http://aiohttp.readthedocs.org/en/stable/client_reference.html#aiohttp.ClientResponse
 
+
     Attributes
-    ----------
-    response: `aiohttp.ClientResponse`_
-        The response of the failed HTTP request.
+    -----------
+    response
+        The response of the failed HTTP request. This is an
+        instance of `aiohttp.ClientResponse`_.
     text: str
         The text of the error. Could be an empty string.
     """
@@ -62,11 +64,11 @@ class HTTPException(TopGGException):
         else:
             self.text = message
 
-        fmt = f"{self.response.reason} (status code: {self.response.status})"
+        fmt = '{0.reason} (status code: {0.status})'
         if self.text:
-            fmt = f"{fmt}: {self.text}"
+            fmt = fmt + ': {1}'
 
-        super().__init__(fmt)
+        super().__init__(fmt.format(self.response, self.text))
 
 
 class Unauthorized(HTTPException):
@@ -77,10 +79,10 @@ class Unauthorized(HTTPException):
     pass
 
 
-class UnauthorizedDetected(TopGGException):
-    """Exception that's thrown when no API Token is provided.
+class UnauthorizedDetected(DBLException):
+    """Exception that's thrown when no API Token is provided
 
-    Subclass of :exc:`TopGGException`
+    Subclass of :exc:`DBLException`
     """
     pass
 

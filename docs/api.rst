@@ -3,7 +3,7 @@
 API Reference
 ===============
 
-The following section outlines the API of topggpy.
+The following section outlines the API of dblpy.
 
 Version Related Info
 ---------------------
@@ -29,7 +29,6 @@ Client
 .. autoclass:: DBLClient
     :members:
 
-
 Event reference
 ---------------
 
@@ -49,43 +48,32 @@ Event reference
         async def on_dbl_vote(data):
             print(data)
 
-    The returned data can be found `here`_.
+    The data returned can be found `here`_.
 
     .. _here: https://top.gg/api/docs#webhooks
 
-Widgets
--------
+.. function:: on_dbl_test(data)
 
-.. note:: General information about top.gg widgets can be in `top.gg docs`_.
+    Called when someone tests webhook system for your bot on top.gg
 
-In topggpy, :class:`DBLClient` has a :meth:`DBLClient.generate_widget` method that takes an ``options`` dictionary as a parameter.
+    :param data: The data with test info returned in dict object
 
-All available values for each key:
-    * ``bot_id``: ID of a bot to generate widget for. Must resolve to an ID of a valid bot when converted to a string;
-    * ``format``: must be either ``png`` and ``svg``. Defaults to ``png``;
-    * ``type``: used for short widgets (``). For large widget, must be an empty string;
-    * ``noavatar``: indicates whether to exclude bot avatar from short widgets. Must be of type ``bool``;
-    * ``colors``: a dictionary consisting of a parameter as a key and HEX color as value. ``color`` will be appended to the key in case ``key.endswith("color")`` returns False. All available fields are mentioned in `top.gg docs`_.
+    Example: ::
 
-Example: ::
+        @bot.event
+        async def on_dbl_test(data):
+            print(data)
 
-    print(await self.topggpy.generate_widget({
-        "id": 270904126974590976,
-        format: "svg",
-        colors: {
-            "username": 0xFFFFFF,
-            "top": 0x000000
-            }
-        }))
+    The data returned can be found `here`_.
 
-.. _top.gg docs: https://top.gg/api/docs#widgets
+    .. _here: https://top.gg/api/docs#webhooks
 
 Exceptions
 ----------
 
 The following exceptions are thrown by the library.
 
-.. autoexception:: TopGGException
+.. autoexception:: DBLException
 
 .. autoexception:: UnauthorizedDetected
 
